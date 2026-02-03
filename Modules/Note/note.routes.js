@@ -6,10 +6,8 @@ import { verifyToken } from "../../Middleware/verifyToken.js";
 
 
 const noteRoutes = express.Router();
-
-noteRoutes.use(verifyToken)
-
 noteRoutes.get("/notes", getNotes);
+noteRoutes.use(verifyToken)
 noteRoutes.post("/notes", addNote);
 noteRoutes.delete("/notes/:id", deleteNote);
 noteRoutes.get("/mynotes", getMyNotes);

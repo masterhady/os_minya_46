@@ -1,5 +1,6 @@
 // database --> schmea + model 
 import mongoose, { Schema , model} from "mongoose";
+import { noteModel } from "./note.model.js";
 
 // const userSchema = new mongoose.Schema({
 //     name: String,
@@ -44,6 +45,14 @@ const userSchema = new Schema({
     versionKey: false // disable column __v
 })
 
+// define hooks
+userSchema.pre("deleteOne",{document: true}, async function() {
+    await noteModel.deleteMany({createdBy: this._id})
+})
+
+userSchema.post("save", function (doc) {
+    console.log("User saved:", doc._id);
+});
 
 //  created at --> 
 //  updated at -->
